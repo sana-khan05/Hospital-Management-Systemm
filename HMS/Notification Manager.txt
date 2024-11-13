@@ -1,0 +1,16 @@
+// 6. Notification Manager
+package com.hospital.util;
+
+public class NotificationManager {
+    public void sendAppointmentReminder(String patientEmail, String appointmentDetails) {
+        // Implementation for sending email notifications
+    }
+    
+    public void sendMedicationAlert(String patientEmail, String medicationDetails) {
+        // Implementation for sending medication reminders
+    }
+    
+    public void sendBillingAlert(String patientEmail, String billingDetails) {
+        // Implementation for sending billing notifications
+    }
+}

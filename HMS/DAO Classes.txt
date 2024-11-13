@@ -1,0 +1,102 @@
+// 5. DAO Classes
+package com.hospital.dao;
+
+import com.hospital.config.DatabaseConfig;
+import com.hospital.model.Patient;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PatientDAO {
+    public void addPatient(Patient patient) throws SQLException {
+        String sql = "INSERT INTO patients (first_name, last_name, date_of_birth, gender, contact_number, email, address, medical_history) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, patient.getFirstName());
+            pstmt.setString(2, patient.getLastName());
+            pstmt.setDate(3, Date.valueOf(patient.getDateOfBirth()));
+            pstmt.setString(4, patient.getGender());
+            pstmt.setString(5, patient.getContactNumber());
+            pstmt.setString(6, patient.getEmail());
+            pstmt.setString(7, patient.getAddress());
+            pstmt.setString(8, patient.getMedicalHistory());
+            
+            pstmt.executeUpdate();
+        }
+    }
+
+    public Patient getPatient(int patientId) throws SQLException {
+        String sql = "SELECT * FROM patients WHERE patient_id = ?";
+        
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, patientId);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    Patient patient = new Patient();
+                    patient.setPatientId(rs.getInt("patient_id"));
+                    patient.setFirstName(rs.getString("first_name"));
+                    patient.setLastName(rs.getString("last_name"));
+                    // Set other fields
+                    return patient;
+                }
+            }
+        }
+        return null;
+    }
+
+    public List<Patient> getAllPatients() throws SQLException {
+        List<Patient> patients = new ArrayList<>();
+        String sql = "SELECT * FROM patients";
+        
+        try (Connection conn = DatabaseConfig.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                Patient patient = new Patient();
+                patient.setPatientId(rs.getInt("patient_id"));
+                patient.setFirstName(rs.getString("first_name"));
+                patient.setLastName(rs.getString("last_name"));
+                // Set other fields
+                patients.add(patient);
+            }
+        }
+        return patients;
+    }
+
+    public void updatePatient(Patient patient) throws SQLException {
+        String sql = "UPDATE patients SET first_name = ?, last_name = ?, date_of_birth = ?, gender = ?, contact_number = ?, email = ?, address = ?, medical_history = ? WHERE patient_id = ?";
+        
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, patient.getFirstName());
+            pstmt.setString(2, patient.getLastName());
+            pstmt.setDate(3, Date.valueOf(patient.getDateOfBirth()));
+            pstmt.setString(4, patient.getGender());
+            pstmt.setString(5, patient.getContactNumber());
+            pstmt.setString(6, patient.getEmail());
+            pstmt.setString(7, patient.getAddress());
+            pstmt.setString(8, patient.getMedicalHistory());
+            pstmt.setInt(9, patient.getPatientId());
+            
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void deletePatient(int patientId) throws SQLException {
+        String sql = "DELETE FROM patients WHERE patient_id = ?";
+        
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, patientId);
+            pstmt.executeUpdate();
+        }
+    }
+}

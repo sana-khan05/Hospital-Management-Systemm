@@ -1,0 +1,54 @@
+// Project Structure:
+/*
+hospital-management-system/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   ├── com/
+│   │   │   │   ├── hospital/
+│   │   │   │   │   ├── config/
+│   │   │   │   │   │   └── DatabaseConfig.java
+│   │   │   │   │   ├── dao/
+│   │   │   │   │   │   ├── PatientDAO.java
+│   │   │   │   │   │   ├── DoctorDAO.java
+│   │   │   │   │   │   ├── AppointmentDAO.java
+│   │   │   │   │   │   ├── PrescriptionDAO.java
+│   │   │   │   │   │   └── BillingDAO.java
+│   │   │   │   │   ├── model/
+│   │   │   │   │   │   ├── Patient.java
+│   │   │   │   │   │   ├── Doctor.java
+│   │   │   │   │   │   ├── Appointment.java
+│   │   │   │   │   │   ├── Prescription.java
+│   │   │   │   │   │   └── Billing.java
+│   │   │   │   │   └── util/
+│   │   │   │   │       └── NotificationManager.java
+│   │   └── resources/
+│   │       └── database.properties
+└── pom.xml
+*/
+
+// 1. First, create pom.xml for dependencies
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.hospital</groupId>
+    <artifactId>hospital-management-system</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.27</version>
+        </dependency>
+        <!-- Add more dependencies as needed -->
+    </dependencies>
+</project>
